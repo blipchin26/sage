@@ -3,7 +3,8 @@ import os
 
 from pathlib import Path
 from datetime import date, datetime, timedelta
-import random
+import streamlit.components.v1 as components
+
 
 #st.write("CWD:", os.getcwd())
 MEDIA_DIR = Path("media")
@@ -57,6 +58,7 @@ images = list(Path("media/images").glob("*"))
 videos = list(Path("media/videos").glob("*"))
 
 if st.session_state.page == "home":
+
     st.markdown(
     "<h1 style='text-align: center; font-size: 60px;'>🐈‍⬛ Daily Sage</h1>",
     unsafe_allow_html=True
@@ -64,7 +66,30 @@ if st.session_state.page == "home":
 
 
 
-    today_str = datetime.now().strftime("%m-%d-%y")
+    from datetime import datetime
+    import pytz
+    import streamlit as st
+
+    if "timezone" not in st.session_state:
+        st.session_state.timezone = "America/New_York"
+        
+    tz = st.selectbox(
+        "Time zone",
+        options=pytz.common_timezones,
+        index=pytz.common_timezones.index(st.session_state.timezone),
+        key="tz_select"
+    )
+
+    if tz != st.session_state.timezone:
+        st.session_state.timezone = tz
+        st.rerun()
+        
+    tz = pytz.timezone(st.session_state.timezone)
+    user_now = datetime.now(tz)
+
+    today_str = user_now.strftime("%B %d, %Y")
+
+
 
     #today_str = date.today().strftime("%B %d, %Y")
 
