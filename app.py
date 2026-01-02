@@ -167,6 +167,14 @@ if st.session_state.page == "home":
             st.info("No audio files found")
     
 elif st.session_state.page == "gallery":
+    
+    from PIL import Image
+
+    def get_thumbnail(image_path, size=(600, 600)):
+        img = Image.open(image_path)
+        img.thumbnail(size)
+        return img
+
     def display_media_grid(media_list, items_per_row=4, media_type="image"):
         for i in range(0, len(media_list), items_per_row):
             row_items = media_list[i:i+items_per_row]
@@ -174,7 +182,7 @@ elif st.session_state.page == "gallery":
             for col, item in zip(cols, row_items):
                 with col:
                     if media_type == "image":
-                        st.image(item, use_container_width=True)
+                        st.image(get_thumbnail(item), use_container_width=True)
                     elif media_type == "video":
                         st.video(item)
                     
