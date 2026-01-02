@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 from datetime import date, datetime, timedelta
 import streamlit.components.v1 as components
+import random
 
 
 #st.write("CWD:", os.getcwd())
@@ -161,7 +162,7 @@ if st.session_state.page == "home":
     ):
         if audio_files:
             chosen_audio = random.choice(audio_files)
-            st.audio(str(chosen_audio))
+            st.audio(str(chosen_audio), autoplay=True)
         else:
             st.info("No audio files found")
     
