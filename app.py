@@ -177,6 +177,15 @@ elif st.session_state.page == "gallery":
                         st.image(item, use_container_width=True)
                     elif media_type == "video":
                         st.video(item)
+                    
+                    if st.button(
+                        "🗑️ Delete",
+                        key=f"delete_{media_type}_{item.name}",
+                        use_container_width=True,
+                    ):
+                        item.unlink(missing_ok=True)
+                        st.success(f"Deleted {item.name}")
+                        st.rerun()
                         
     st.title("📸 Full Gallery")
     
