@@ -2,7 +2,7 @@ import streamlit as st
 import os
 
 from pathlib import Path
-from datetime import date
+from datetime import date, datetime, timedelta
 import random
 
 #st.write("CWD:", os.getcwd())
@@ -16,7 +16,7 @@ videos_dir.mkdir(parents=True, exist_ok=True)
 
 if "page" not in st.session_state:
     st.session_state.page = "home"
-    
+
 with st.sidebar:
     st.header("Controls")
 
@@ -62,7 +62,11 @@ if st.session_state.page == "home":
     unsafe_allow_html=True
 )
 
-    today_str = date.today().strftime("%B %d, %Y")
+
+
+    today_str = datetime.now().strftime("%m-%d-%y")
+
+    #today_str = date.today().strftime("%B %d, %Y")
 
     st.markdown(
         f"<p style='text-align: center; font-size: 24px;'>{today_str}</p>",
@@ -83,7 +87,7 @@ if st.session_state.page == "home":
         unsafe_allow_html=True
     )
     today = date.today()
-    day_number = (today - date(1970,1,1)).days  
+    day_number = (today - date(1970,1,1)).days
 
     # Get the “daily” photo/video using modulo
     img_path = images[day_number % len(images)] if images else None
